@@ -1,6 +1,8 @@
 # Bootstrap grid
 [Sketch](https://www.sketchapp.com/) plugin inserts correct bootstrap grid in nested blocks.
 
+![alt text](https://github.com/De-La-Vega/BootstrapGrid/blob/master/resources/demo.gif "Bootstrap Grid demo")
+
 ## Installing plugin
 1. [Download the ZIP file](https://www.google.com) and unzip
 2. Open `Bootstrap grid.sketchplugin`

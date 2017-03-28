@@ -4,7 +4,7 @@
 ![alt text](https://github.com/De-La-Vega/BootstrapGrid/blob/master/resources/demo.gif "Bootstrap Grid demo")
 
 ## Installing plugin
-1. [Download the ZIP file](https://www.google.com) and unzip
+1. [Download the ZIP file](https://github.com/De-La-Vega/BootstrapGrid/archive/master.zip) and unzip
 2. Open `Bootstrap grid.sketchplugin`
 
 ## Usage

@@ -1,0 +1,18 @@
+{
+    "name" : "Bootstrap Grid",
+    "identifier" : "bootstrap.grid",
+    "version" : "1.0",
+    "description" : "Set bootstrap grid",
+    "authorEmail" : "kirenkov.vitaliy@gmail.com",
+    "author" : "Kirenkov Vitaliy",
+
+    "commands" : [
+     {
+      "script" : "BootstrapGrid.js",
+      "handler" : "onRun",
+      "shortcut" : "ctrl shift g",
+      "name" : "Set Grid",
+      "identifier" : "bootstrap.grid"
+    }
+  ]
+}

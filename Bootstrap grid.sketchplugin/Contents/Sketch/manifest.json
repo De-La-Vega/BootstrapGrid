@@ -1,18 +1,40 @@
 {
-    "name" : "Bootstrap Grid",
-    "identifier" : "bootstrap.grid",
-    "version" : "1.0",
-    "description" : "Set bootstrap grid",
-    "authorEmail" : "kirenkov.vitaliy@gmail.com",
-    "author" : "Kirenkov Vitaliy",
+    "name": "Bootstrap grid",
+    "identifier": "bootstrap.grid",
+    "version": "1.0",
+    "description": "Set bootstrap grid",
+    "author": "Kirenkov Vitaliy",
+    "email": "kirenkov.vitaliy@gmail.com",
 
-    "commands" : [
-     {
-      "script" : "BootstrapGrid.js",
-      "handler" : "onRun",
-      "shortcut" : "ctrl shift g",
-      "name" : "Set Grid",
-      "identifier" : "bootstrap.grid"
+    "commands": [{
+        "script": "build-grid.js",
+        "handler": "buildGrid",
+        "shortcut": "ctrl shift g",
+        "name": "Set grid",
+        "identifier": "buildGrid"
+    }, {
+        "script": "options-window.js",
+        "handler": "openOptionsWindow",
+        "shortcut": "ctrl shift w",
+        "name": "Options window",
+        "identifier": "openOptionsWindow"
+    }, {
+        "script": "about-author.js",
+        "handler": "aboutAuthor",
+        "shortcut": "",
+        "name": "About author",
+        "identifier": "aboutAuthor"
+    }],
+    
+    "menu": {
+        "items": [
+            "buildGrid",
+            "openOptionsWindow",
+            "-",
+            "aboutAuthor"
+        ]
     }
-  ]
 }
+
+
+

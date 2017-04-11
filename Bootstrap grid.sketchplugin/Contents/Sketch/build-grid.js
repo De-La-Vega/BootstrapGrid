@@ -1,25 +1,7 @@
 @import 'pluginDefaults.js';
+@import 'helpers.js';
 
 var Plugin = {
-
-    /**
-     * Defaults.
-     */
-    defaultSettings: function (colCount, gutterWidth, offsetLeft, offsetRight) {
-        var colCount = colCount || userDefaults.colCount;
-        var gutterWidth = gutterWidth || userDefaults.gutterWidth;
-        var offsetLeft = offsetLeft || userDefaults.offsetLeft;
-        var offsetRight = offsetRight || userDefaults.offsetRight;
-
-        return {
-            colCount: colCount,
-            gutterWidth: gutterWidth,
-            overlayOpacity: 0.5,
-            overlayColor: "#ff0000",
-            offsetLeft: offsetLeft,
-            offsetRight: offsetRight
-        }
-    },
 
     /**
      * Creating group.
@@ -39,13 +21,12 @@ var Plugin = {
     createShape: function(x, y, width, height, index) {
         var shape = MSRectangleShape.alloc().initWithFrame(NSMakeRect(x, y, width, height));
         var shapeGroup = MSShapeGroup.shapeWithPath(shape);
-        var settings = this.defaultSettings();
 
         shapeGroup.setName("Col " + index);
-        shapeGroup.style().contextSettings().setOpacity(settings.overlayOpacity);
+        shapeGroup.style().contextSettings().setOpacity(userDefaults.overlayOpacity);
         // shapeGroup.setIsLocked(true);
         var fill = shapeGroup.style().addStylePartOfType(0);
-        fill.color = MSImmutableColor.colorWithSVGString(settings.overlayColor);
+        fill.color = MSImmutableColor.colorWithSVGString(userDefaults.overlayColor);
 
         return shapeGroup;
     },
@@ -81,11 +62,11 @@ var Plugin = {
     },
 
     /**
-     * Showing error. No layer selection.
+     * Render alert.
      */
-    renderNoSelection: function() {
+    renderAlert: function(title, message) {
         var app = [NSApplication sharedApplication];
-        [app displayDialog: "Please, select layer for which yon want insert grid" withTitle: "No layers are selected!"];
+        [app displayDialog: message withTitle: title];
     },
 
     /**
@@ -103,21 +84,17 @@ var Plugin = {
             var layer = this.getParent(target[selectionIndex]);
             var container = this.createGroup(selectionIndex);
             var params = this.getLayerParams(layer.frame());
-            var settings = this.defaultSettings(colCount, gutterWidth, offsetLeft, offsetRight);
-            var colWidth = (params.width - settings.offsetLeft - settings.offsetRight - settings.gutterWidth * (settings.colCount * 2 - 2))/settings.colCount;
-            var indent = colWidth + settings.gutterWidth * 2;
+            var colWidth = (params.width - offsetLeft - offsetRight - gutterWidth * (colCount * 2 - 2))/colCount;
+            var indent = colWidth + gutterWidth * 2;
             var overlays = [];
 
-            for (var i = 1; i <= settings.colCount; i++) {
-                var x;
+            if (gutterWidth * (colCount * 2 - 2) + colCount > params.width) {
+                return this.renderAlert("Incorrect selection width!", "Please, make a larger selection for current configuration");
+            }
 
-                if (i == 1) {
-                    x = params.posX + settings.offsetLeft;
-                } else {
-                    x = params.posX + settings.offsetLeft + indent * (i - 1);
-                }
-
-                var overlay = this.createShape(x, params.posY, colWidth, params.height, i);
+            for (var i = 1; i <= colCount; i++) {
+                var posX = params.posX + offsetLeft + indent * (i - 1);
+                var overlay = this.createShape(posX, params.posY, colWidth, params.height, i);
                 overlays.push(overlay);
             }
 
@@ -134,7 +111,7 @@ var Plugin = {
      */
     init: function(context, colCount, gutterWidth, offsetLeft, offsetRight) {
         if (context.selection.count() == 0) {
-            this.renderNoSelection();
+            this.renderAlert("No layers are selected!", "Please, select layer for which yon want insert grid");
         } else {
             this.renderGrid(context, colCount, gutterWidth, offsetLeft, offsetRight);
         };
@@ -145,5 +122,11 @@ var Plugin = {
  * Build grid.
  */
 var buildGrid = function(context) {
-    Plugin.init(context);
+    Plugin.init(
+        context,
+        userDefaults.colCount,
+        userDefaults.gutterWidth,
+        userDefaults.offsetLeft,
+        userDefaults.offsetRight
+    );
 }

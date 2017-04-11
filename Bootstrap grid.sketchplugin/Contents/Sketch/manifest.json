@@ -10,7 +10,7 @@
         "script": "build-grid.js",
         "handler": "buildGrid",
         "shortcut": "ctrl shift g",
-        "name": "Set grid",
+        "name": "Set grid with last configuration",
         "identifier": "buildGrid"
     }, {
         "script": "options-window.js",
@@ -18,6 +18,12 @@
         "shortcut": "ctrl shift w",
         "name": "Options window",
         "identifier": "openOptionsWindow"
+    }, {
+        "script": "default-grid.js",
+        "handler": "buildDefaultGrid",
+        "shortcut": "",
+        "name": "Set default Bootstrap grid",
+        "identifier": "buildDefaultGrid"
     }, {
         "script": "about-author.js",
         "handler": "aboutAuthor",
@@ -28,8 +34,9 @@
     
     "menu": {
         "items": [
-            "buildGrid",
             "openOptionsWindow",
+            "buildGrid",
+            "buildDefaultGrid",
             "-",
             "aboutAuthor"
         ]

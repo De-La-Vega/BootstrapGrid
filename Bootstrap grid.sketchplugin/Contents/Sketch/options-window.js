@@ -7,33 +7,38 @@ var OptionsWindow = {
     /**
      * Show window with options.
      */
-    showGridOptionsWindow: function(context, colCount, gutterWidth, offsetLeft, offsetRight) {
+    showGridOptionsWindow: function(params) {
         var optionsWindow = [COSAlertWindow new];
         var FIELDS = [
             {
                 text: "Columns count (max 12):",
                 fieldName: "colCount",
-                value: colCount
+                value: params.colCount
             },
             {
                 text: "Gutter space (px):",
                 fieldName: "gutterWidth",
-                value: gutterWidth
+                value: params.gutterWidth
             },
             {
                 text: "Left offset (px):",
                 fieldName: "offsetLeft",
-                value: offsetLeft
+                value: params.offsetLeft
             },
             {
                 text: "Right offset (px):",
                 fieldName: "offsetRight",
-                value: offsetRight
+                value: params.offsetRight
+            },
+            {
+                text: "Overlay color (hex):",
+                fieldName: "overlayColor",
+                value: params.overlayColor
             }
         ];
 
-        [optionsWindow setIcon: NSImage.alloc().initByReferencingFile(context.plugin.urlForResourceNamed("icon.png").path())]
-        [optionsWindow setMessageText: 'Grid options']
+        [optionsWindow setIcon: NSImage.alloc().initByReferencingFile(params.context.plugin.urlForResourceNamed("icon.png").path())];
+        [optionsWindow setMessageText: 'Grid options'];
         // [optionsWindow setInformativeText: 'Message about using setting'];
         [optionsWindow addButtonWithTitle: 'Set grid'];
         [optionsWindow addButtonWithTitle: 'Cancel'];
@@ -41,8 +46,8 @@ var OptionsWindow = {
 
         // Create fields
         for (var i = 0; i < FIELDS.length; i++) {
-            [optionsWindow addTextLabelWithValue: FIELDS[i].text]
-            [optionsWindow addTextFieldWithValue: FIELDS[i].value]
+            [optionsWindow addTextLabelWithValue: FIELDS[i].text];
+            [optionsWindow addTextFieldWithValue: FIELDS[i].value];
             userDefaults[FIELDS[i].fieldName] = FIELDS[i].value;
         }
 
@@ -55,25 +60,46 @@ var OptionsWindow = {
  * Open options.
  */
 var openOptionsWindow = function(context) {
-    var window = OptionsWindow.showGridOptionsWindow(context, userDefaults.colCount, userDefaults.gutterWidth, userDefaults.offsetLeft, userDefaults.offsetRight)[0];
+
+    // if (!context.document.currentPage().currentArtboard()) {
+    //     Helpers.renderAlert("This plugin needs Artboard.", "Please, insert Artboard.");
+    //     return;
+    // }
+
+    var params = {
+        context: context,
+        colCount: userDefaults.colCount,
+        gutterWidth: userDefaults.gutterWidth,
+        offsetLeft: userDefaults.offsetLeft,
+        offsetRight: userDefaults.offsetRight,
+        overlayColor: userDefaults.overlayColor
+    };
+    
+    var window = OptionsWindow.showGridOptionsWindow(params)[0];
     var response = window.runModal();
 
     switch (response) {
         // OK
         case 1000:
-            userDefaults.colCount = Helpers.getValueAtIndex(window, 1);
-            userDefaults.gutterWidth = Helpers.getValueAtIndex(window, 3);
-            userDefaults.offsetLeft = Helpers.getValueAtIndex(window, 5);
-            userDefaults.offsetRight = Helpers.getValueAtIndex(window, 7);
+            userDefaults.colCount = Helpers.getValueAtIndex(window, 1, 'colCount');
+            userDefaults.gutterWidth = Helpers.getValueAtIndex(window, 3, 'gutterWidth');
+            userDefaults.offsetLeft = Helpers.getValueAtIndex(window, 5, 'offsetLeft');
+            userDefaults.offsetRight = Helpers.getValueAtIndex(window, 7, 'offsetRight');
+            userDefaults.overlayColor = Helpers.getValueAtIndex(window, 9, 'overlayColor');
+
+            if (!Helpers.isValidColCount(userDefaults.colCount)){
+                Helpers.renderAlert('Invalid columns count', 'You must set maximum 12 columns.');
+                return;
+            }
+
+            if (!Helpers.isValidColor(userDefaults.overlayColor)){
+                Helpers.renderAlert('Invalid color', 'You must insert HEX color.');
+                return;
+            }
+
             saveDefaults(userDefaults);
 
-            Plugin.init(
-                context,
-                userDefaults.colCount,
-                userDefaults.gutterWidth,
-                userDefaults.offsetLeft,
-                userDefaults.offsetRight
-            )
+            Plugin.init(params);
             break;
 
         // Cancel

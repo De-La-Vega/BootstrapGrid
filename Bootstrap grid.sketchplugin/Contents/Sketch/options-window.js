@@ -34,6 +34,11 @@ var OptionsWindow = {
                 text: "Overlay color (hex):",
                 fieldName: "overlayColor",
                 value: params.overlayColor
+            },
+            {
+                text: "Overlay opacity (from 1 to 100):",
+                fieldName: "overlayOpacity",
+                value: params.overlayOpacity
             }
         ];
 
@@ -66,16 +71,17 @@ var openOptionsWindow = function(context) {
     //     return;
     // }
 
-    var params = {
+    var paramsInitial = {
         context: context,
         colCount: userDefaults.colCount,
         gutterWidth: userDefaults.gutterWidth,
         offsetLeft: userDefaults.offsetLeft,
         offsetRight: userDefaults.offsetRight,
-        overlayColor: userDefaults.overlayColor
+        overlayColor: userDefaults.overlayColor,
+        overlayOpacity: userDefaults.overlayOpacity
     };
     
-    var window = OptionsWindow.showGridOptionsWindow(params)[0];
+    var window = OptionsWindow.showGridOptionsWindow(paramsInitial)[0];
     var response = window.runModal();
 
     switch (response) {
@@ -86,6 +92,7 @@ var openOptionsWindow = function(context) {
             userDefaults.offsetLeft = Helpers.getValueAtIndex(window, 5, 'offsetLeft');
             userDefaults.offsetRight = Helpers.getValueAtIndex(window, 7, 'offsetRight');
             userDefaults.overlayColor = Helpers.getValueAtIndex(window, 9, 'overlayColor');
+            userDefaults.overlayOpacity = Helpers.getValueAtIndex(window, 11, 'overlayOpacity');
 
             if (!Helpers.isValidColCount(userDefaults.colCount)){
                 Helpers.renderAlert('Invalid columns count', 'You must set maximum 12 columns.');
@@ -97,9 +104,24 @@ var openOptionsWindow = function(context) {
                 return;
             }
 
+            if (!Helpers.isValidOpacity(userDefaults.overlayOpacity)){
+                Helpers.renderAlert('Invalid opacity', 'You must insert value between 1 and 100.');
+                return;
+            }
+
+            var paramsUpdated = {
+                context: context,
+                colCount: userDefaults.colCount,
+                gutterWidth: userDefaults.gutterWidth,
+                offsetLeft: userDefaults.offsetLeft,
+                offsetRight: userDefaults.offsetRight,
+                overlayColor: userDefaults.overlayColor,
+                overlayOpacity: userDefaults.overlayOpacity
+            };
+
             saveDefaults(userDefaults);
 
-            Plugin.init(params);
+            Plugin.init(paramsUpdated);
             break;
 
         // Cancel

@@ -18,12 +18,12 @@ var Plugin = {
     /**
      * Creating shape.
      */
-    createShape: function(x, y, width, height, index, overlayColor) {
+    createShape: function(x, y, width, height, index, overlayColor, overlayOpacity) {
         var shape = MSRectangleShape.alloc().initWithFrame(NSMakeRect(x, y, width, height));
         var shapeGroup = MSShapeGroup.shapeWithPath(shape);
 
         shapeGroup.setName("Col " + index);
-        shapeGroup.style().contextSettings().setOpacity(userDefaults.overlayOpacity);
+        shapeGroup.style().contextSettings().setOpacity(overlayOpacity/100);
         // shapeGroup.setIsLocked(true);
         var fill = shapeGroup.style().addStylePartOfType(0);
         fill.color = MSImmutableColor.colorWithSVGString('#' + overlayColor);
@@ -86,7 +86,7 @@ var Plugin = {
 
             for (var i = 1; i <= params.colCount; i++) {
                 var posX = layerParams.posX + params.offsetLeft + indent * (i - 1);
-                var overlay = this.createShape(posX, layerParams.posY, colWidth, layerParams.height, i, params.overlayColor);
+                var overlay = this.createShape(posX, layerParams.posY, colWidth, layerParams.height, i, params.overlayColor, params.overlayOpacity);
                 overlays.push(overlay);
             }
 
@@ -126,7 +126,8 @@ var buildGrid = function(context) {
         gutterWidth: userDefaults.gutterWidth,
         offsetLeft: userDefaults.offsetLeft,
         offsetRight: userDefaults.offsetRight,
-        overlayColor: userDefaults.overlayColor
+        overlayColor: userDefaults.overlayColor,
+        overlayOpacity: userDefaults.overlayOpacity
     };
 
     Plugin.init(params);

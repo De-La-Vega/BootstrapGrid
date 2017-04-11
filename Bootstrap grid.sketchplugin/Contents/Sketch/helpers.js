@@ -11,7 +11,7 @@ var Helpers = {
         offsetLeft: 0,
         offsetRight: 0,
         overlayColor: "ff0000",
-        overlayOpacity: 0.5
+        overlayOpacity: 50
     },
 
     /**
@@ -97,6 +97,9 @@ var Helpers = {
                 break;
             case 'overlayColor':
                 result = element.stringValue();
+                break;
+            case 'overlayOpacity':
+                result = parseInt(element.stringValue());
                 break;
         }
 

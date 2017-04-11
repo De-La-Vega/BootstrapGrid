@@ -71,6 +71,11 @@ var openOptionsWindow = function(context) {
     //     return;
     // }
 
+    if (!Helpers.hasLayerSelection(context)) {
+        Helpers.renderNoLayerSelection();
+        return;
+    }
+
     var paramsInitial = {
         context: context,
         colCount: userDefaults.colCount,
@@ -121,7 +126,7 @@ var openOptionsWindow = function(context) {
 
             saveDefaults(userDefaults);
 
-            Plugin.init(paramsUpdated);
+            BuildGrid.init(paramsUpdated);
             break;
 
         // Cancel

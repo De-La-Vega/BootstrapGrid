@@ -15,6 +15,20 @@ var Helpers = {
     },
 
     /**
+     * Has user selected any layer.
+     */
+    hasLayerSelection: function(context) {
+        return context.selection.count() != 0;
+    },
+
+    /**
+     * No one layer was selected.
+     */
+    renderNoLayerSelection: function() {
+        this.renderAlert("No layers are selected", "Please, select layer for which yon want insert grid.");
+    },
+
+    /**
      * Is valid color.
      */
     isValidColor: function(h) {

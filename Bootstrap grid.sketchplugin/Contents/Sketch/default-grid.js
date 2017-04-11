@@ -17,5 +17,5 @@ var buildDefaultGrid = function(context) {
         overlayOpacity: userDefaults.overlayOpacity
     };
 
-    Plugin.init(params);
+    BuildGrid.init(params);
 }

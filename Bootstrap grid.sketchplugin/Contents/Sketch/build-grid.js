@@ -1,7 +1,7 @@
 @import 'pluginDefaults.js';
 @import 'helpers.js';
 
-var Plugin = {
+var BuildGrid = {
 
     /**
      * Creating group.
@@ -102,10 +102,10 @@ var Plugin = {
      * Init plugin.
      */
     init: function(params) {
-        if (params.context.selection.count() == 0) {
-            Helpers.renderAlert("No layers are selected", "Please, select layer for which yon want insert grid.");
-        } else {
+        if (Helpers.hasLayerSelection(params.context)) {
             this.renderGrid(params);
+        } else {
+            Helpers.renderNoLayerSelection();
         };
     }
 }
@@ -130,5 +130,5 @@ var buildGrid = function(context) {
         overlayOpacity: userDefaults.overlayOpacity
     };
 
-    Plugin.init(params);
+    BuildGrid.init(params);
 }

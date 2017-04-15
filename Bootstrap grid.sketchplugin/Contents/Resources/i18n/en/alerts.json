@@ -1,0 +1,30 @@
+{
+    "noArtboardAndLayerSelection": {
+        "title": "This plugin needs Artboard and selected layer",
+        "message": "Please, insert Artboard and select layer."
+    },
+    "noArtboard": {
+        "title": "This plugin needs Artboard",
+        "message": "Please, insert Artboard."
+    },
+    "noLayerSelection": {
+        "title": "No layers are selected",
+        "message": "Please, select layer for which yon want insert grid."
+    },
+    "invalidColumnsCount": {
+        "title": "Invalid columns count",
+        "message": "You must set maximum 12 columns."
+    },
+    "invalidColor": {
+        "title": "Invalid color",
+        "message": "You must insert HEX color."
+    },
+    "invalidOpacity": {
+        "title": "Invalid opacity",
+        "message": "You must insert value between 1 and 100."
+    },
+    "invalidSelectionWidth": {
+        "title": "Incorrect selection width",
+        "message": "Please, make a larger selection for current configuration."
+    }
+}

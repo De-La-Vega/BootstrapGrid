@@ -8,8 +8,14 @@
 2. Open `Bootstrap grid.sketchplugin`
 
 ## Usage
-1. From menu: Plugins -> Bootstrap Grid -> Set Grid
-2. Shortcut: <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>g</kbd>
+* From menu: Plugins -> Bootstrap Grid
+* By using hotkey:
+
+| Hotkey         | Result |
+| ------------ | ------- |
+| <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>w</kbd> | Options window |
+| <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>g</kbd> | Set grid with last configuration |
+| <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>d</kbd> | Set default Bootstrap grid |
 
 ## Contact
 * Follow [@VitaliyKirenkov](https://twitter.com/VitaliyKirenkov) on Twitter

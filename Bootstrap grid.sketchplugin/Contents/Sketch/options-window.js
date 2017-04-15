@@ -2,63 +2,63 @@
 @import 'helpers.js';
 @import 'pluginDefaults.js';
 
-var OptionsWindow = {
 
-    /**
-     * Show window with options.
-     */
-    showGridOptionsWindow: function(params) {
-        var optionsWindow = [COSAlertWindow new];
-        var FIELDS = [
-            {
-                text: "Columns count (max 12):",
-                fieldName: "colCount",
-                value: params.colCount
-            },
-            {
-                text: "Gutter space (px):",
-                fieldName: "gutterWidth",
-                value: params.gutterWidth
-            },
-            {
-                text: "Left offset (px):",
-                fieldName: "offsetLeft",
-                value: params.offsetLeft
-            },
-            {
-                text: "Right offset (px):",
-                fieldName: "offsetRight",
-                value: params.offsetRight
-            },
-            {
-                text: "Overlay color (hex):",
-                fieldName: "overlayColor",
-                value: params.overlayColor
-            },
-            {
-                text: "Overlay opacity (from 1 to 100):",
-                fieldName: "overlayOpacity",
-                value: params.overlayOpacity
-            }
-        ];
+/**
+ * Show window with options.
+ */
+function showGridOptionsWindow (params) {
+    var optionsWindow = [COSAlertWindow new];
+    var icon = "icon" + Helpers.imageSuffix() + ".png";
 
-        [optionsWindow setIcon: NSImage.alloc().initByReferencingFile(params.context.plugin.urlForResourceNamed("icon.png").path())];
-        [optionsWindow setMessageText: 'Grid options'];
-        // [optionsWindow setInformativeText: 'Message about using setting'];
-        [optionsWindow addButtonWithTitle: 'Set grid'];
-        [optionsWindow addButtonWithTitle: 'Cancel'];
-        // [optionsWindow addButtonWithTitle: 'Reset Defaults'];
-
-        // Create fields
-        for (var i = 0; i < FIELDS.length; i++) {
-            [optionsWindow addTextLabelWithValue: FIELDS[i].text];
-            [optionsWindow addTextFieldWithValue: FIELDS[i].value];
-            userDefaults[FIELDS[i].fieldName] = FIELDS[i].value;
+    var FIELDS = [
+        {
+            label: "Columns count (max 12):",
+            fieldName: "colCount",
+            field: params.colCount
+        },
+        {
+            label: "Gutter space (px):",
+            fieldName: "gutterWidth",
+            field: params.gutterWidth
+        },
+        {
+            label: "Left offset (px):",
+            fieldName: "offsetLeft",
+            field: params.offsetLeft
+        },
+        {
+            label: "Right offset (px):",
+            fieldName: "offsetRight",
+            field: params.offsetRight
+        },
+        {
+            label: "Overlay color (hex):",
+            fieldName: "overlayColor",
+            field: params.overlayColor
+        },
+        {
+            label: "Overlay opacity (from 1 to 100):",
+            fieldName: "overlayOpacity",
+            field: params.overlayOpacity
         }
+    ];
 
-        return [optionsWindow];
+    [optionsWindow setIcon: NSImage.alloc().initByReferencingFile(params.context.plugin.urlForResourceNamed(icon).path())];
+    [optionsWindow setMessageText: 'Grid options'];
+    // [optionsWindow setInformativeText: 'Message about using setting'];
+    [optionsWindow addButtonWithTitle: 'Set grid'];
+    [optionsWindow addButtonWithTitle: 'Cancel'];
+    // [optionsWindow addButtonWithTitle: 'Reset Defaults'];
+
+    // Create fields
+    for (var i = 0; i < FIELDS.length; i++) {
+        [optionsWindow addTextLabelWithValue: FIELDS[i].label];
+        [optionsWindow addTextFieldWithValue: FIELDS[i].field];
+        userDefaults[FIELDS[i].fieldName] = FIELDS[i].field;
     }
-};
+
+    return [optionsWindow];
+}
 
 
 /**
@@ -66,13 +66,8 @@ var OptionsWindow = {
  */
 var openOptionsWindow = function(context) {
 
-    // if (!context.document.currentPage().currentArtboard()) {
-    //     Helpers.renderAlert("This plugin needs Artboard.", "Please, insert Artboard.");
-    //     return;
-    // }
-
-    if (!Helpers.hasLayerSelection(context)) {
-        Helpers.renderNoLayerSelection();
+    // Checking artboard and selection
+    if (!Helpers.hasWrapper(context)){
         return;
     }
 
@@ -86,7 +81,7 @@ var openOptionsWindow = function(context) {
         overlayOpacity: userDefaults.overlayOpacity
     };
     
-    var window = OptionsWindow.showGridOptionsWindow(paramsInitial)[0];
+    var window = showGridOptionsWindow(paramsInitial)[0];
     var response = window.runModal();
 
     switch (response) {
@@ -100,17 +95,17 @@ var openOptionsWindow = function(context) {
             userDefaults.overlayOpacity = Helpers.getValueAtIndex(window, 11, 'overlayOpacity');
 
             if (!Helpers.isValidColCount(userDefaults.colCount)){
-                Helpers.renderAlert('Invalid columns count', 'You must set maximum 12 columns.');
+                Helpers.renderAlert(context, 'invalidColumnsCount');
                 return;
             }
 
             if (!Helpers.isValidColor(userDefaults.overlayColor)){
-                Helpers.renderAlert('Invalid color', 'You must insert HEX color.');
+                Helpers.renderAlert(context, 'invalidColor');
                 return;
             }
 
             if (!Helpers.isValidOpacity(userDefaults.overlayOpacity)){
-                Helpers.renderAlert('Invalid opacity', 'You must insert value between 1 and 100.');
+                Helpers.renderAlert(context, 'invalidOpacity');
                 return;
             }
 

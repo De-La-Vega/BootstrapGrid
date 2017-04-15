@@ -15,23 +15,52 @@ var Helpers = {
     },
 
     /**
+     * Has artboard and selection.
+     */
+    hasWrapper (context) {
+        if (!this.hasArtboard(context) && !this.hasLayerSelection(context)) {
+            this.renderAlert(context, 'noArtboardAndLayerSelection');
+            return false;
+        }
+
+        if (!this.hasArtboard(context)) {
+            this.renderNoArtboard(context);
+            return false;
+        }
+
+        if (!this.hasLayerSelection(context)) {
+            this.renderNoLayerSelection(context);
+            return false;
+        }
+
+        return true;
+    },
+
+    /**
      * Has user selected any layer.
      */
-    hasLayerSelection: function(context) {
+    hasLayerSelection (context) {
         return context.selection.count() != 0;
     },
 
     /**
-     * No one layer was selected.
+     * Has artboard.
      */
-    renderNoLayerSelection: function() {
-        this.renderAlert("No layers are selected", "Please, select layer for which yon want insert grid.");
+    hasArtboard (context) {
+        return context.document.currentPage().currentArtboard();
+    },
+
+    /**
+     * Is valid columns count.
+     */
+    isValidColCount (colCount) {
+        return colCount <= 12;
     },
 
     /**
      * Is valid color.
      */
-    isValidColor: function(h) {
+    isValidColor (h) {
         var a = parseInt(h, 16);
         return (a.toString(16) == h.toLowerCase());
     },
@@ -39,66 +68,83 @@ var Helpers = {
     /**
      * Is valid opacity.
      */
-    isValidOpacity: function(opacity) {
+    isValidOpacity (opacity) {
         return opacity > 0 && opacity <= 100;
-    },
-
-    /**
-     * Is valid columns count.
-     */
-    isValidColCount: function(colCount) {
-        return colCount <= 12;
     },
 
     /**
      * Is retina display.
      */
-    isRetinaDisplay: function() {
+    isRetinaDisplay () {
         return NSScreen.isOnRetinaScreen();
     },
 
     /**
      * Set icon.
      */
-    imageSuffix: function() {
-        return isRetinaDisplay() ? "@2x" : "";
-    },
-
-    /**
-     * Get value from input field.
-     */
-    getInputValue: function(value) {
-        return parseInt(value.stringValue().replace(/[^0-9.,]/g, ''));
+    imageSuffix () {
+        return this.isRetinaDisplay() ? "@2x" : "";
     },
 
     /**
      * Open external URL.
      */
-    openUrl: function(url) {
+    openUrl (url) {
         NSWorkspace
             .sharedWorkspace()
             .openURL(NSURL.URLWithString(url));
     },
 
     /**
-     * Render alert.
+     * @deprecated
+     * 
+     * Get layers parent.
      */
-    renderAlert: function(title, message) {
-        var app = [NSApplication sharedApplication];
-        [app displayDialog: message withTitle: title];
+    getParent (object) {
+        var objParentGroup = object.parentGroup();
+        var isParentArtboard = objParentGroup.isKindOfClass(MSArtboardGroup);
+        var isParentPage = objParentGroup.isKindOfClass(MSPage);
+        var result;
+
+        if (isParentArtboard || isParentPage) {
+            result = object;
+        } else {
+            result = this.getParent(objParentGroup);
+        }
+
+        return result;
+    },
+
+    /**
+     * Getting layer params.
+     */
+    getLayerParams (layer) {
+        return {
+            width: Math.round(layer.absoluteRect().width()),
+            height: Math.round(layer.absoluteRect().height()),
+            posX: Math.round(layer.absoluteRect().rulerX()),
+            posY: Math.round(layer.absoluteRect().rulerY())
+        };
+    },
+
+    /**
+     * Get value from input field.
+     */
+    getInputValue (value) {
+        return parseInt(value.stringValue().replace(/[^0-9.,]/g, ''));
     },
 
     /**
      * Get element at index.
      */
-    getElementAtIndex: function(view, index) {
+    getElementAtIndex (view, index) {
         return [view viewAtIndex: index];
     },
 
     /**
      * Get elements value at index.
      */
-    getValueAtIndex: function(view, index, type) {
+    getValueAtIndex (view, index, type) {
         var element = this.getElementAtIndex(view, index);
         var result;
 
@@ -118,6 +164,67 @@ var Helpers = {
         }
 
         return result;
+    },
+
+    /**
+     * Field value in object.
+     */
+    deepFind(obj, path) {
+        var paths = path.split('.');
+        var current = obj;
+        var i;
+
+        for (i = 0; i < paths.length; ++i) {
+            if (current[ paths[i] ] == undefined) {
+                return undefined;
+            } else {
+                current = current[ paths[i] ];
+            }
+        }
+
+        return current;
+    },
+
+    /**
+     * Read json data.
+     */
+    readData (context, fileName, field) {
+        var filePath = context
+            .plugin
+            .url()
+            .URLByAppendingPathComponent("Contents")
+            .URLByAppendingPathComponent("Resources")
+            .URLByAppendingPathComponent("i18n")
+            .URLByAppendingPathComponent("en")
+            .URLByAppendingPathComponent(fileName + ".json")
+            .path();
+        var file = NSJSONSerialization.JSONObjectWithData_options_error(NSData.dataWithContentsOfFile(filePath), 0, nil);
+
+        return this.deepFind(file, field);
+    },
+
+    /**
+     * Render alert.
+     */
+    renderAlert (context, section) {
+        var title = this.readData(context, 'alerts', section + '.title');
+        var message = this.readData(context, 'alerts', section + '.message');
+        var app = [NSApplication sharedApplication];
+        [app displayDialog: message withTitle: title];
+    },
+
+    /**
+     * No artboard.
+     */
+    renderNoArtboard (context) {        
+        this.renderAlert(context, 'noArtboard');
+    },
+
+    /**
+     * No one layer was selected.
+     */
+    renderNoLayerSelection (context) {
+        this.renderAlert(context, 'noLayerSelection');
     }
 };
 

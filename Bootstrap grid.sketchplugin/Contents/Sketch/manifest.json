@@ -21,7 +21,7 @@
     }, {
         "script": "default-grid.js",
         "handler": "buildDefaultGrid",
-        "shortcut": "",
+        "shortcut": "ctrl shift d",
         "name": "Set default Bootstrap grid",
         "identifier": "buildDefaultGrid"
     }, {
@@ -42,6 +42,3 @@
         ]
     }
 }
-
-
-

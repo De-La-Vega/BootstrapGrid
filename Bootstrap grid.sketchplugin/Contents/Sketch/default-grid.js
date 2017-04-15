@@ -4,7 +4,14 @@
 /**
  * Default grid.
  */
+
 var buildDefaultGrid = function(context) {
+
+    // Checking artboard and selection
+    if (!Helpers.hasWrapper(context)){
+        return;
+    }
+
     saveDefaults(Helpers.defaultPresets);
 
     var params = {

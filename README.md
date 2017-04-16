@@ -7,6 +7,16 @@
 1. [Download the ZIP file](https://github.com/De-La-Vega/BootstrapGrid/archive/master.zip) and unzip
 2. Open `Bootstrap grid.sketchplugin`
 
+## Install with Sketchpacks
+1. With [Sketchpacks](https://sketchpacks.com), search for `Bootstrap grid`
+2. Click `Install`
+3. Get automatic updates for `Bootstrap grid`
+
+### Already have Sketchpacks?
+<a href="https://sketchpacks.com/De-La-Vega/BootstrapGrid/install">
+    <img width="160" height="41" src="http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png" >
+</a>
+
 ## Usage
 * From menu: Plugins -> Bootstrap Grid
 * By using hotkey:

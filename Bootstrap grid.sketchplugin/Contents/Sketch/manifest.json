@@ -5,6 +5,7 @@
     "description": "Set bootstrap grid",
     "author": "Kirenkov Vitaliy",
     "email": "kirenkov.vitaliy@gmail.com",
+    "icon" : "sketch-runner-icon.png",
 
     "commands": [{
         "script": "build-grid.js",

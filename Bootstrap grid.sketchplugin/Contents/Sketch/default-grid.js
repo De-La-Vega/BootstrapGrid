@@ -12,16 +12,16 @@ var buildDefaultGrid = function(context) {
         return;
     }
 
-    saveDefaults(Helpers.defaultPresets);
+    // saveDefaults(Helpers.defaultPresets);
 
     var params = {
         context: context,
-        colCount: userDefaults.colCount,
-        gutterWidth: userDefaults.gutterWidth,
-        offsetLeft: userDefaults.offsetLeft,
-        offsetRight: userDefaults.offsetRight,
-        overlayColor: userDefaults.overlayColor,
-        overlayOpacity: userDefaults.overlayOpacity
+        colCount: Helpers.defaultPresets.colCount,
+        gutterWidth: Helpers.defaultPresets.gutterWidth,
+        offsetLeft: Helpers.defaultPresets.offsetLeft,
+        offsetRight: Helpers.defaultPresets.offsetRight,
+        overlayColor: Helpers.defaultPresets.overlayColor,
+        overlayOpacity: Helpers.defaultPresets.overlayOpacity
     };
 
     BuildGrid.init(params);

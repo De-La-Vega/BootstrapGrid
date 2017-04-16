@@ -18,7 +18,7 @@
 | <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>d</kbd> | Set default Bootstrap grid |
 
 ## Options
-![alt text](https://github.com/De-La-Vega/BootstrapGrid/blob/master/resources/grid-options.jpg "Options window")
+<img src="https://github.com/De-La-Vega/BootstrapGrid/blob/master/resources/grid-options.jpg" alt="Options window" width="500" />
 
 ## Examples
 ### Custom and default grid set

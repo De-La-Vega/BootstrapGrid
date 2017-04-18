@@ -29,8 +29,14 @@
         "script": "about-author.js",
         "handler": "aboutAuthor",
         "shortcut": "",
-        "name": "About author",
+        "name": "Created by: Vitaliy Kirenkov",
         "identifier": "aboutAuthor"
+    }, {
+        "script": "about-idea.js",
+        "handler": "aboutIdea",
+        "shortcut": "",
+        "name": "Idea: Anastasia Popova",
+        "identifier": "aboutIdea"
     }],
     
     "menu": {
@@ -39,7 +45,8 @@
             "buildGrid",
             "buildDefaultGrid",
             "-",
-            "aboutAuthor"
+            "aboutAuthor",
+            "aboutIdea"
         ]
     }
 }

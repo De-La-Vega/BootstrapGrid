@@ -38,3 +38,6 @@
 ## Contact
 * Follow [@VitaliyKirenkov](https://twitter.com/VitaliyKirenkov) on Twitter
 * E-mail: [kirenkov.vitaliy@gmail.com](mailto:kirenkov.vitaliy@gmail.com)
+
+## License
+![https://github.com/lucaorio/sketch-styles-generator/blob/master/license](https://img.shields.io/badge/license-MIT-blue.svg)

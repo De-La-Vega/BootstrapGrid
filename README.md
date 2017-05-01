@@ -3,6 +3,9 @@
 
 ![alt text](https://github.com/De-La-Vega/BootstrapGrid/blob/master/resources/demo.gif "Bootstrap grid demo")
 
+## Already using plugin?
+Please, take a few minutes for answer several questions in [Google Forms](https://goo.gl/forms/lx778isxC4S9Jm8F3) to make plugin better.
+
 ## Installing plugin
 1. [Download the ZIP file](https://github.com/De-La-Vega/BootstrapGrid/archive/master.zip) and unzip
 2. Open `Bootstrap grid.sketchplugin`

@@ -19,8 +19,7 @@ var BuildGrid = {
      * Creating shape.
      */
     createShape (x, y, width, height, index, overlayColor, overlayOpacity) {
-        var shape = MSRectangleShape.alloc().initWithFrame(NSMakeRect(x, y, width, height));
-        var shapeGroup = MSShapeGroup.shapeWithPath(shape);
+        var shapeGroup = MSShapeGroup.shapeWithRect(NSMakeRect(x, y, width, height));
 
         shapeGroup.setName("Col " + index);
         shapeGroup.style().contextSettings().setOpacity(overlayOpacity/100);

@@ -1,7 +1,7 @@
 {
     "name": "Bootstrap grid",
     "identifier": "bootstrap.grid",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Set bootstrap grid",
     "author": "Kirenkov Vitaliy",
     "email": "kirenkov.vitaliy@gmail.com",
@@ -38,7 +38,7 @@
         "name": "Idea: Anastasia Popova",
         "identifier": "aboutIdea"
     }],
-    
+
     "menu": {
         "items": [
             "openOptionsWindow",
